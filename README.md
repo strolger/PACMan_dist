@@ -53,11 +53,11 @@ a probabilistic model for each word using Bayes' Theorem.
 
 
 
-Fisher's Method
+Robinson's Method
 
 Once the Bayesian classifier is trained, it is ready to parse new,
 unclassified proposals. The data for each word found in a proposal are
-combined using Fisher's Method to form an overall probability that the
+combined using Robinson's Method to form an overall probability that the
 proposal falls into an established category. The formula combines
 p-values from a number of independent tests into one overall p-value
 with chi-squared distribution. The results are normalized, yielding a
