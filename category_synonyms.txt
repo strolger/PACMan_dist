@@ -1,0 +1,7 @@
+#Category translate
+P = extra-solar planets, extra solar planets, debris disks, solar system
+STR = cool stars, hot stars, resolved star formation, star formation, ism and circumstellar matter
+SP = resolved stellar populations
+GAL = unresolved stellar populations, unresolved stellar populations and galaxy structure, ism in external galaxies, unresolved star formation
+AGN = agn/quasars, agn quasars
+CSM = cosmology, quasar absorption lines, quasar absorption lines and igm
