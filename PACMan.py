@@ -117,8 +117,8 @@ def main():
      else:
           corpus = arg[0]
 
-     results=run(corpus, verbose=verbose, hkap_file=hkap_file, train=train, authors=authors, exact_names=exact_names, first_only=first_only, nyears=nyears, plotit=plotit, hst=hst, clobber=clobber, rs_exceptions=rs_exceptions)
-     return(results)
+     results,categories=run(corpus, verbose=verbose, hkap_file=hkap_file, train=train, authors=authors, exact_names=exact_names, first_only=first_only, nyears=nyears, plotit=plotit, hst=hst, clobber=clobber, rs_exceptions=rs_exceptions)
+     return(results,categories)
           
 def run(corpus, verbose=False, hkap_file=os.path.join(software,'libs/PACManData.bay'), train=False, authors=False, exact_names=False, first_only=False, nyears=10, plotit=False, hst=False, clobber=False, rs_exceptions=''):
      f = open(os.path.join(software,'category_synonyms.txt'),'r')
@@ -198,8 +198,7 @@ def run(corpus, verbose=False, hkap_file=os.path.join(software,'libs/PACManData.
                except:
                     results_dict[author]['cites']=[0]
           result = results_dict
-          
-     return(result)
+     return(result,uber_categories)
 
     
 
@@ -326,6 +325,19 @@ def normalize_result(result):
         out.append((item[0],item[1]/tot))
     return(out)
 
+def return_most_probable(result, categories):
+     out=[]
+     tprob = 0
+     cnt = 0
+     while tprob < 0.60 and cnt <=len(categories.keys())-2:
+          try:
+               tprob += float(result[cnt][1])
+          except:
+               pdb.set_trace()
+          cnt+=1
+     return(result[:cnt])
+
+
 # need this to strip punctuation
 replaceThesePunctuation = string.punctuation
 #replaceThesePunctuation = re.sub('-','',replaceThesePunctuation)
@@ -371,17 +383,28 @@ def hindex(list):
 
 
 if __name__=='__main__':
-     results=main()
-     print results
-     pdb.set_trace()
-     ## field  = 'PROP'
+     (results,categories)=main()
+     #results=return_most_probable(results,categories)
+     pickle.dump(results,open('ers_results.pkl','wb'))
+
+     ## output='output.txt'
+     ## if os.path.isfile(output): os.remove(output)
+     ## f=open(output,'w')
      ## for author in results.keys():
-     ##      category = where(array(results[author]['hkap']['f0'] == field))
-     ##      score = array(results[author]['hkap']['f1'])[category]
+     ##      print '%-30s\t' %(author),
+     ##      f.write('%-30s\t' %(author)),
+     ##      for field in results[author]['hkap']['f0']:
+     ##           category = where(array(results[author]['hkap']['f0'] == field))
+     ##           score = array(results[author]['hkap']['f1'])[category]
+     ##           print '%s=%0.2f\t' %(field, score),
+     ##           f.write('%s=%0.2f\t' %(field, score)),
      ##      abs = sorted(list(set(results[author]['cites'])))
      ##      nabs = len(abs)
      ##      hind = hindex(abs)
-     ##      print '%-30s\t%s\t%1.3e\t%02d\t%02d' %(author, field, score, nabs,hind)
-          
+     ##      print '%02d\t%02d' %(nabs,hind)
+     ##      f.write ('%02d\t%02d\n' %(nabs,hind))
+     ## f.close()
+     
+     
      
     
