@@ -73,3 +73,5 @@ unrelated to science categories, are removed before
 classification. Conversely, words that are almost always found in only
 one science category-"planet" in "Planets", for example-can be used to
 prime PACMan before training.
+
+This project is licensed under the terms of the MIT license.
